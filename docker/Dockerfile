@@ -1,6 +1,6 @@
 ###########################################################
 ##														 ##
-##	Docker container for virtual acustic enviroment      ##
+##    Docker container for virtual acustic enviroment    ##
 ##														 ##
 ##														 ##
 ##														 ##
@@ -34,21 +34,25 @@ RUN echo ********* Installing wget **********
 RUN apt-get -yq install wget
 
 RUN echo ********* Installing apache server 2 **********
-RUN apt-get install –y apache2
-RUN apt-get install –y apache2-utils 
+RUN apt-get -yq install apache2
+#RUN apt-get -yq install apache2-utils 
 
 RUN apt-get clean && apt-get autoclean -yq && apt-get autoremove -yq
 
 
 #User creation
-RUN useradd -rm -d /home/acusticaVirtual -s /bin/bash -g root -G sudo acusticaVirtual
-USER acusticaVirtual
-WORKDIR /home/acusticaVirtual
+#RUN useradd -rm -d /home/acusticaVirtual -s /bin/bash -g root -G sudo acusticaVirtual
+#USER acusticaVirtual
+#WORKDIR /home/acusticaVirtual
 
-RUN echo ********* Downloading resonance-audio and resonance-audio-web-sdk **********
-RUN cd /home/acusticaVirtual
-RUN git clone https://github.com/resonance-audio/resonance-audio
-RUN git clone https://github.com/resonance-audio/resonance-audio-web-sdk
+#RUN echo ********* Downloading resonance-audio and resonance-audio-web-sdk **********
+#RUN cd /home/acusticaVirtual
+#RUN git clone https://github.com/resonance-audio/resonance-audio
+#RUN git clone https://github.com/resonance-audio/resonance-audio-web-sdk
 
-#Execute cmd interpreter
-CMD ["/bin/bash"]
+#apache2 and web server configuration
+EXPOSE 80
+ADD ["index.html","/var/www/html/"]
+
+#Execute apache in background
+ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
