@@ -1,61 +1,77 @@
-//<script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
+let audioContext;
+let scene;
+let audioElement;
+let audioElementSource;
+let source;
+let audioReady = false;
 
-// Create an AudioContext
-let audioContext = new AudioContext();
+/**
+ * @private
+ */
+function initAudio() {
+  audioContext = new (window.AudioContext || window.webkitAudioContext);
 
-// Create a (first-order Ambisonic) Resonance Audio scene and pass it
-// the AudioContext.
-let resonanceAudioScene = new ResonanceAudio(audioContext);
+  // Create a (1st-order Ambisonic) ResonanceAudio scene.
+  scene = new ResonanceAudio(audioContext);
 
-// Connect the scene’s binaural output to stereo out.
-resonanceAudioScene.output.connect(audioContext.destination);
+  // Send scene's rendered binaural output to stereo out.
+  scene.output.connect(audioContext.destination);
 
+  // Set room acoustics properties.
+  let dimensions = {
+    width: 23.1,
+    height: 2.5,
+    depth: 3.4,
+  };
+  let materials = {
+    left: 'brick-bare',
+    right: 'curtain-heavy',
+    front: 'marble',
+    back: 'glass-thin',
+    down: 'grass',
+    up: 'transparent',
+  };
+  scene.setRoomProperties(dimensions, materials);
 
-// Define room dimensions.
-// By default, room dimensions are undefined (0m x 0m x 0m).
-let roomDimensions = {
-  width: 3.1,
-  height: 2.5,
-  depth: 3.4,
+  // Create an audio element. Feed into audio graph.
+  audioElement = document.createElement('audio');
+  audioElement.src = 'https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_1MG.wav';
+  audioElement.crossOrigin = 'anonymous';
+  audioElement.load();
+  audioElement.loop = true;
+
+  audioElementSource = audioContext.createMediaElementSource(audioElement);
+
+  // Create a Source, connect desired audio input to it.
+  source = scene.createSource();
+  audioElementSource.connect(source.input);
+
+  // The source position is relative to the origin
+  // (center of the room).
+  source.setPosition(+0.707, +0.707, 0);
+
+  audioReady = true;
+}
+
+let onLoad = function() {
+  // Initialize play button functionality.
+  let sourcePlayback = document.getElementById('playButton');
+  sourcePlayback.onclick = function(event) {
+    switch (event.target.textContent) {
+      case 'Play': {
+        if (!audioReady) {
+          initAudio();
+        }
+        event.target.textContent = 'Pause';
+        audioElement.play();
+      }
+      break;
+      case 'Pause': {
+        event.target.textContent = 'Play';
+        audioElement.pause();
+      }
+      break;
+    }
+  };
 };
-
-
-// Define materials for each of the room’s six surfaces.
-// Room materials have different acoustic reflectivity.
-let roomMaterials = {
-  // Room wall materials
-  left: 'brick-bare',
-  right: 'curtain-heavy',
-  front: 'marble',
-  back: 'glass-thin',
-  // Room floor
-  down: 'grass',
-  // Room ceiling
-  up: 'transparent',
-};
-
-
-// Add the room definition to the scene.
-resonanceAudioScene.setRoomProperties(roomDimensions, roomMaterials);
-
-// Create an AudioElement.
-let audioElement = document.createElement('audio');
-
-// Load an audio file into the AudioElement.
-audioElement.src = '../resources/speech-sample.wav';
-
-
-// Generate a MediaElementSource from the AudioElement.
-let audioElementSource = audioContext.createMediaElementSource(audioElement);
-
-
-// Add the MediaElementSource to the scene as an audio input source.
-let source = resonanceAudioScene.createSource();
-audioElementSource.connect(source.input);
-
-
-// Set the source position relative to the room center (source default position).
-source.setPosition(-0.707, -0.707, 0);
-
-// Play the audio.
-audioElement.play();
+window.addEventListener('load', onLoad);
