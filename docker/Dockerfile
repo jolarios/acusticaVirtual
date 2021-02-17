@@ -46,13 +46,14 @@ RUN apt-get clean && apt-get autoclean -yq && apt-get autoremove -yq
 #WORKDIR /home/acusticaVirtual
 
 #RUN echo ********* Downloading resonance-audio and resonance-audio-web-sdk **********
-#RUN cd /home/acusticaVirtual
-#RUN git clone https://github.com/resonance-audio/resonance-audio
-#RUN git clone https://github.com/resonance-audio/resonance-audio-web-sdk
+RUN rm -rf /var/www/html/*
+RUN git clone https://github.com/jolarios/probaResonance /var/www/html/
+#RUN rm -rf /var/www/html/.git
+RUN ls -lisa /var/www/html
+RUN git clone https://github.com/resonance-audio/resonance-audio-web-sdk /var/www/html/resonance-audio-web-sdk
 
 #apache2 and web server configuration
 EXPOSE 80
-ADD ["index.html","/var/www/html/"]
 
 #Execute apache in background
 ENTRYPOINT ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
