@@ -22,6 +22,7 @@ RUN echo ********* Installing git **********
 RUN apt-get -yq install git
 
 RUN echo ********* Installing apache server 2 **********
+RUN DEBIAN_FRONTEND="noninteractive" apt-get -y install tzdata
 RUN apt-get -yq install apache2
 
 
