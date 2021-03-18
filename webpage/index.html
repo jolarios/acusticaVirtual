@@ -2,35 +2,75 @@
 
 <html lang="en">
 	<head>
-    	<!-- Required meta tags -->
-    	<meta charset="utf-8"/>
-    	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    	<link rel="stylesheet" href="css/style.css">
+		<!-- Required meta tags -->
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="css/style.css">
 		<title>Virtual Acoustic</title>
+		<font></font>
 	</head>
 
-	<body>
-		<h1>Virtual Acoustic test</h1>
-		<p>For this test we are using que resonance-audio-web-sdk.</p>
+	<form name="myForm" action="sim.html" onsubmit="return validateForm()" method="post">
+		<div id="page-container">
+			<div><header>
+				<h1 style="font-size: 60px">Virtual Acoustic</h1>
+				<h2>A friendly way to visualize the Head Related Transfer Function.</h2>
+			</header></div>
+				<p id="dimensions" style="font-size: 20px;">Complete all the data to generate an Virtual Acoustic example</p>
 
-		<div>
 			<div>
-				<span class="play-input">
-					<button type="button" class="btn btn-primary" id="playButton">Play</button>
-				</span>
+				<div>
+					<p id="dimensions">Room dimensions</p>
+					<p>
+						<input name="widthR" type = "number" min = "0.5" max = "25" step="0.5" value="10" placeholder="Width" required>
+						<input name="heightR" type = "number" min = "0.5" max = "25" step="0.5" value="10" placeholder="Height" required>
+						<input name="depthR" type = "number" min = "0.5" max = "25" step="0.5" value="10" placeholder="Depth" required>
+					</p>
+					<p>Values between 0.5 and 25 meters</p>
+				</div>
+
+
+				<div>
+					<div>
+						<p id="dimensions">Relative position of the sound source</p>
+						<p>Values from the center of the room in meters (can be negative)</p>
+						<p>The input can't be greater than the dimmension of the room divide by two</p>
+						<p>
+							<input name="widthS" type = "number" min = "-12.5" max = "12,5" step="0.01" value="1" placeholder="Width" required>
+							<input name="heightS" type = "number" min = "-12.5" max = "12,5" step="0.01" value="-3" placeholder="Height" required>
+							<input name="depthS" type = "number" min = "-12.5" max = "12,5" step="0.01" value="2" placeholder="Depth" required>
+						</p>
+					</div>
+	
+					<div>
+						<p id="dimensions">Relative position of the listener</p>
+						<p>Values from the center of the room in meters (can be negative)</p>
+						<p>The input can't be greater than the dimmension of the room divide by two</p>
+						<p>
+							<input name="widthL" type = "number" min = "-12.5" max = "12,5" step="0.001" value="0" placeholder="Width" required>
+							<input name="heightL" type = "number" min = "-12.5" max = "12,5" step="0.001" value="0" placeholder="Height" required>
+							<input name="depthL" type = "number" min = "-12.5" max = "12,5" step="0.001" value="0" placeholder="Depth" required>
+						</p>
+					</div>
+				</div>
+
+				<input type="submit" class="form-submit-button">
+
 			</div>
 
 			<div>
-				<canvas id="canvas" width="480" height="480" style="cursor:default;"></canvas>
+				<footer>
+				</footer>
 			</div>
 		</div>
+		
 
 		<script src="resonance-audio-web-sdk/build/resonance-audio.min.js"></script>
 		<script src="resonance-audio-web-sdk/examples/resources/js/canvas-control.js"></script>
 
 		<script src="js/main.js"></script>
 
-	</body>
+	</form>
 
 
 </html>

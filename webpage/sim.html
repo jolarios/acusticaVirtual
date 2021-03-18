@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<!-- Required meta tags -->
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="css/style.css">
+		<title>Virtual Acoustic</title>
+		<font></font>
+	</head>
+
+	<form>
+		<div id="page-container">
+			<div><header>
+				<h1 style="font-size: 60px">Virtual Acoustic</h1>
+				<h2>A friendly way to visualize the Head Related Transfer Function.</h2>
+			</header></div>
+				<p id="dimensions" style="font-size: 20px;">For a better experience you can use hedphones</p>
+
+			<div>
+				<img src="resources/volume-high.svg" class="icon" alt="source" id="sourceIcon" hidden="true">
+				<img src="resources/person.svg" class="icon" alt="listener" id="listenerIcon" hidden="true">
+			</div>
+
+			<div class="col-lg-5 text-center">
+				<div style="text-align: center; width:100%">
+					<canvas id="canvas"></canvas>
+			  </div>
+			</div>
+
+
+			<span class="input-group-btn">
+			  <button type="button" class="form-submit-button" id="playButton" style="width: 100px; margin-top: 15px;">Play</button>
+			</span>
+
+
+
+		</div>
+
+		<script src="resonance-audio-web-sdk/build/resonance-audio.min.js"></script>
+		<script src="resonance-audio-web-sdk/examples/resources/js/canvas-control.js"></script>
+
+		<script src="js/main.js"></script>
+		
+	</form>
+</html>

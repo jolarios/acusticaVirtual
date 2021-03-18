@@ -5,9 +5,41 @@ let audioElementSource;
 let source;
 let audioReady = false;
 
+//Variables for room dimension and source/listener location
+var widthR, heightR, depthR, widthS, heightS, depthS, widthL, heightL, depthL;
+
+
+function validateForm(){
+  
+  var i, auxUp, auxDown, text, flag;
+  let inputs = ["widthR", "heightR", "depthR", "widthS",
+   "heightS", "depthS", "widthL", "heightL", "depthL"];
+
+  for(i = 0; i < inputs.length; i++){
+    var x = document.forms["myForm"][inputs[i]].value;
+    
+    if(i < 3){ auxUp = 25; auxDown = 0.5;}
+    else{auxUp = 12.5; auxDown = -12.5;}
+
+
+    if (x == "" || isNaN(x) || x <= auxDown || x >= auxUp) {
+      text = "Input not valid";
+      return text;      
+    }
+    else {
+      sessionStorage.setItem(inputs[i], x);
+      text = "Input OK";
+    }
+
+  }
+  return text;
+}
+
+
 /**
  * @private
  */
+
 function initAudio() {
   audioContext = new (window.AudioContext || window.webkitAudioContext);
 
@@ -19,9 +51,9 @@ function initAudio() {
 
   // Set room acoustics properties.
   let dimensions = {
-    width: 23.1,
-    height: 2.5,
-    depth: 3.4,
+    width: parseFloat(sessionStorage.getItem("widthR")),
+    height: parseFloat(sessionStorage.getItem("heightR")),
+    depth: parseFloat(sessionStorage.getItem("depthR")),
   };
   let materials = {
     left: 'brick-bare',
@@ -31,6 +63,7 @@ function initAudio() {
     down: 'grass',
     up: 'transparent',
   };
+
   scene.setRoomProperties(dimensions, materials);
 
   // Create an audio element. Feed into audio graph.
@@ -48,7 +81,11 @@ function initAudio() {
 
   // The source position is relative to the origin
   // (center of the room).
-  source.setPosition(+0.707, +0.707, 0);
+  source.setPosition(parseFloat(sessionStorage.getItem("widthS")),
+    parseFloat(sessionStorage.getItem("heightS")), parseFloat(sessionStorage.getItem("depthS")));
+  
+  scene.setListenerPosition(parseFloat(sessionStorage.getItem("widthL")),
+    parseFloat(sessionStorage.getItem("heightL")), parseFloat(sessionStorage.getItem("depthL")));
 
   audioReady = true;
 }
@@ -73,5 +110,55 @@ let onLoad = function() {
       break;
     }
   };
+  
+  //Width --> y
+  //Depth --> x
+
+
+  if(parseFloat(sessionStorage.getItem("depthS")) !== 0){
+    var sourceX = (parseFloat(sessionStorage.getItem("depthS")) + 
+      parseFloat(sessionStorage.getItem("depthR"))) / 
+      parseFloat(sessionStorage.getItem("depthS"));
+  }else{sourceX = 0.5;}
+  
+  if(parseFloat(sessionStorage.getItem("widthS")) !== 0){
+    var sourceY = (parseFloat(sessionStorage.getItem("widthS")) + 
+      parseFloat(sessionStorage.getItem("widthR"))) / 
+      parseFloat(sessionStorage.getItem("widthS"));
+  }else{sourceY = 0.5;}
+
+
+  if(parseFloat(sessionStorage.getItem("depthL")) !== 0){
+    var listenerX = (parseFloat(sessionStorage.getItem("depthL")) / 
+      parseFloat(sessionStorage.getItem("depthR"))) / 
+      parseFloat(sessionStorage.getItem("depthL"));
+  }else{listenerX = 0.5;}
+
+  if(parseFloat(sessionStorage.getItem("widthL")) !== 0){
+    var listenerY = (parseFloat(sessionStorage.getItem("widthL")) / 
+      parseFloat(sessionStorage.getItem("widthR"))) / 
+      parseFloat(sessionStorage.getItem("widthL"));
+  }else{listenerY = 0.5;}
+
+  let canvas = document.getElementById('canvas');
+  let elements = [
+    {
+      icon: 'sourceIcon',
+      x: sourceX,
+      y: sourceY,
+      radius: 0.04,
+      alpha: 0.333,
+      clickable: false,
+    },
+    {
+      icon: 'listenerIcon',
+      x: listenerX,
+      y: listenerY,
+      radius: 0.04,
+      alpha: 0.616,
+      clickable: false,
+    },
+  ];
+  new CanvasControl(canvas, elements);
 };
 window.addEventListener('load', onLoad);
