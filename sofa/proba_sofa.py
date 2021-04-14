@@ -19,18 +19,29 @@ if(sofa.isValid()):
 	print("Variables")
 	sofa.printSOFAVariables()
 
-
 	sourcePositions = sofa.getVariableValue('SourcePosition')
+	dim_size = int(str(sofa.getDimension('M'))[-4:])
+	i = j = z = 0
+	mat = [[],[]]
+	x = int(sourcePositions[0, 0])
+'''
+	while i < dim_size:
+		print("i = " + str(i) + "\nz =" + str(z) + "\nj = " + str(j) + "\n\n")
 
-	m = 0
-	print("\n")
-	print("Source Position of measurement " + str(m))
-	print(sourcePositions[m])
-
+		if x == int(sourcePositions[i, 0]):
+			mat[j][z] = sourcePositions[i]
+			++z
+		else:
+			x = int(sourcePositions[i, 0])
+			z = 0
+			++j
+		++i
+'''
 
 	data = sofa.getDataIR()
 	hrtf = data[m,:,:]
 	
+
 	print("\n")
 	print("HRTF dimensions")
 	print(hrtf.shape)
@@ -40,3 +51,6 @@ if(sofa.isValid()):
 	plt.grid()
 	plt.legend()
 	plt.show()
+
+else:
+	print("ERROR: SOFA file ", path, " is not valid!!")
