@@ -5,8 +5,8 @@ import soundfile as sf
 import numpy as np
 
 
-path = input("Introduce file's path (filename included): ")
-sofa = SOFAFile(path, 'r')
+#path = input("Introduce file's path (filename included): ")
+sofa = SOFAFile('proba1.sofa', 'r')
 print("\n")
 
 if(sofa.isValid()):
@@ -20,24 +20,13 @@ if(sofa.isValid()):
 	sofa.printSOFAVariables()
 
 	sourcePositions = sofa.getVariableValue('SourcePosition')
-	dim_size = int(str(sofa.getDimension('M'))[-4:])
-	i = j = z = 0
-	mat = [[],[]]
-	x = int(sourcePositions[0, 0])
-'''
-	while i < dim_size:
-		print("i = " + str(i) + "\nz =" + str(z) + "\nj = " + str(j) + "\n\n")
+	
 
-		if x == int(sourcePositions[i, 0]):
-			mat[j][z] = sourcePositions[i]
-			++z
-		else:
-			x = int(sourcePositions[i, 0])
-			z = 0
-			++j
-		++i
-'''
-
+	m = 0
+	print("\n")
+	print("Source Position of measurement " + str(m))
+	print(sourcePositions[m])
+	
 	data = sofa.getDataIR()
 	hrtf = data[m,:,:]
 	

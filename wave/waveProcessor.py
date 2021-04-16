@@ -4,7 +4,7 @@ import wave
 
 #Realizar os inputs
 
-with wave.open('bird-1.wav', mode='rb') as file:
+with wave.open('azi_0_ele_0_DFC.wav', mode='rb') as file:
 	
 	print('\nInfo about: ')
 	info = file.getparams()
@@ -22,6 +22,8 @@ with wave.open('bird-1.wav', mode='rb') as file:
 	signal = file.readframes(-1)
 	signal = np.fromstring(signal, "Int16")
 	fs = file.getframerate()
+
+	file.rewind()
 
 #	for i in range(0, info[3]):
 #		aux = file.readframes(1)
