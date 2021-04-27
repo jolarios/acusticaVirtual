@@ -43,3 +43,33 @@ if(sofa.isValid()):
 
 else:
 	print("ERROR: SOFA file ", path, " is not valid!!")
+
+
+
+#	dim_size = int(str(sofa.getDimension('M'))[-4:])
+#	i = j = z = 0
+#	inicial = sourcePositions[0, 0]
+#	angulos = 1
+#	azimuth = 0
+#	contador = 0
+#	max_azimuth = 0
+#	for i in range(0,dim_size-1):
+#		print("i = " + str(i) + " sourcePositions: " +str(sourcePositions[i,0]) + " inicial = "+str(inicial))
+#		if inicial == sourcePositions[i, 0]:
+#			contador = contador + 1
+#		else:
+#			if contador > max_azimuth:
+#				max_azimuth = contador
+#			inicial = sourcePositions[i,0]
+#			angulos = angulos + 1
+#			contador = 1
+#	while i < dim_size:
+#		#print("i = " + str(i) + "\nz =" + str(z) + "\nj = " + str(j) + "\n\n")
+#		if x == int(sourcePositions[i, 0]):
+#			mat[j][z] = sourcePositions[i]
+#			++z
+#		else:
+#			x = int(sourcePositions[i, 0])
+#			z = 0
+#			++j
+#		++i

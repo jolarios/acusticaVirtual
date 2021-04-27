@@ -11,3 +11,5 @@ After download the repo we have to do the following steps to install our envirom
 	docker build -t acustica_virtual .
 	docker run -it acustica_virtual
 
+
+docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker container ls | grep "acustica_virtual:latest" | cut -d " " -f1)
