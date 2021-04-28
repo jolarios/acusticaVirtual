@@ -145,7 +145,7 @@ let onLoad = function() {
     {
       icon: 'sourceIcon',
       x: 0.25,
-      y: -0.25,
+      y: 0.75,
       radius: 0.04,
       alpha: 0.333,
       clickable: false,
