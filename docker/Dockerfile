@@ -31,7 +31,9 @@ RUN apt-get clean && apt-get autoclean -yq && apt-get autoremove -yq
 
 #RUN echo ********* Downloading resonance-audio and resonance-audio-web-sdk **********
 RUN rm -rf /var/www/html/*
-RUN git clone https://github.com/jolarios/probaResonance /var/www/html/
+RUN git clone https://github.com/jolarios/acusticaVirtual /tmp
+RUN mv /tmp/webpage/* /var/www/html/
+
 RUN git clone https://github.com/resonance-audio/resonance-audio-web-sdk /var/www/html/resonance-audio-web-sdk
 
 #apache2 and web server configuration

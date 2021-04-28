@@ -68,7 +68,8 @@ function initAudio() {
 
   // Create an audio element. Feed into audio graph.
   audioElement = document.createElement('audio');
-  audioElement.src = 'https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_1MG.wav';
+  audioElement.src = 'http://recursostic.educacion.es/bancoimagenes/web/download.php?fileid=/bancoimagenes/contenidos/sonidos01/CD01/wav/amik00017.wav&aceptar=si';
+  //https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_1MG.wav
   audioElement.crossOrigin = 'anonymous';
   audioElement.load();
   audioElement.loop = true;
