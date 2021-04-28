@@ -68,7 +68,7 @@ function initAudio() {
 
   // Create an audio element. Feed into audio graph.
   audioElement = document.createElement('audio');
-  audioElement.src = 'https://github.com/jolarios/acusticaVirtual/blob/main/webpage/resources/music.wav';
+  audioElement.src = 'https://file-examples-com.github.io/uploads/2017/11/file_example_WAV_1MG.wav';
   audioElement.crossOrigin = 'anonymous';
   audioElement.load();
   audioElement.loop = true;
@@ -144,8 +144,8 @@ let onLoad = function() {
   let elements = [
     {
       icon: 'sourceIcon',
-      x: sourceX,
-      y: sourceY,
+      x: 0.25,
+      y: -0.25,
       radius: 0.04,
       alpha: 0.333,
       clickable: false,
