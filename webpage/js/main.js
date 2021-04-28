@@ -144,8 +144,8 @@ let onLoad = function() {
   let elements = [
     {
       icon: 'sourceIcon',
-      x: 0.25,
-      y: 0.75,
+      x: sourceX,
+      y: sourceY,
       radius: 0.04,
       alpha: 0.333,
       clickable: false,
